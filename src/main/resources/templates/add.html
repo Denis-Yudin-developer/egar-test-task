@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" th:href="@{style.css}" />
+</head>
+<body>
+    <form th:method="GET" th:action="@{/}">
+        <input type="submit" value="Назад">
+    </form>
+    <div>
+        <p th:if="${errorNumExists}">Данный регистрациоонный номер уже записан на другое ТС</p>
+        <form  th:method="POST" th:action="@{/vehicle/add}">
+                <label for="make">Введите марку ТС:</label><br>
+                <input type="text" id="make" name="make" required><br>
+                <label for="model">Введите модель ТС:</label><br>
+                <input type="text" id="model" name="model" required><br>
+                <label for="categoryName">Введите категорию ТС:</label><br>
+                <input type="text" id="categoryName" name="categoryName"><br>
+                <label for="registrationNumber">Введите гос. номер ТС:</label><br>
+                <input type="text" id="registrationNumber" name="registrationNumber" required><br>
+                <label for="transportTypeId">Выберите тип ТС</label><br>
+                <select th:object="${transportType}" id="transportTypeId" name="transportTypeId">
+                    <option th:each="transportType : ${transportTypes}" th:value="${transportType.getId()}" th:text="${transportType.getTypeName()}"></option>
+                </select><br>
+                <label for="manufactureYear">Выберите год выпуска транспортного средства:</label><br>
+                <input type="number" min="1885" max="2023" step="1" value="" id="manufactureYear" name="manufactureYear" required/><br>
+                <label for="isTrailerAvailable">Наличие прицепа</label>
+                <input type = "checkbox" id = "isTrailerAvailable" name = "isTrailerAvailable"/>
+                <input type="submit" value="Добавить"/>
+        </form>
+    </div>
+</body>
+</html>

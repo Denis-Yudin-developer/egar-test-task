@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form th:method="GET" th:action="@{/}">
+        <input type="submit" value="Назад">
+    </form>
+    <form th:method="PATCH" th:action="@{/vehicle/{id}(id=${id})}" th:fragment="content">
+        <div >
+            <label for="make">Введите марку ТС:</label><br>
+            <input type="text" id="make" name="make" th:value="${vehicle.getMake()}" required><br>
+            <label for="model">Введите модель ТС:</label><br>
+            <input type="text" id="model" name="model" th:value="${vehicle.getModel()}"required><br>
+            <label for="categoryName">Введите категорию ТС:</label><br>
+            <input type="text" id="categoryName" name="categoryName" th:value="${vehicle.getCategoryName()}" required><br>
+            <label for="registrationNumber">Введите гос. номер ТС:</label><br>
+            <input type="text" id="registrationNumber" name="registrationNumber" th:value="${vehicle.getRegistrationNumber()}" required><br>
+            <label for="transportTypeId">Выберите тип ТС</label><br>
+            <select th:object="${transportType}" id="transportTypeId" name="transportTypeId">
+                <option th:each="transportType : ${transportTypes}" th:value="${transportType.getId()}" th:text="${transportType.getTypeName()}"></option>
+            </select><br>
+            <label for="manufactureYear">Выберите год выпуска транспортного средства:</label><br>
+            <input type="number" min="1885" max="2023" step="1" th:value="${vehicle.getYear()}" id="manufactureYear" name="manufactureYear" required/><br>
+            <label for="isTrailerAvailable">Наличие прицепа</label>
+            <input type = "checkbox" id = "isTrailerAvailable" name = "isTrailerAvailable"/>
+        </div>
+        <input type="submit" value="Обновить" id="patchButton">
+    </form>
+</body>
+</html>

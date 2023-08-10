@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" th:href="@{style.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{modalWindow.css}" />
+</head>
+<body>
+    <form th:method="GET" th:action="@{/add}">
+        <input type="submit" value="Добавить">
+    </form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Марка</th>
+                <th>Модель</th>
+                <th>Категория</th>
+                <th>Регистрационный номер</th>
+                <th>Тип автомобиля</th>
+                <th>Год выпуска</th>
+                <th>Наличие прицепа</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="vehicle: ${vehicles}">
+                <td th:text="${vehicle.make}" />
+                <td th:text="${vehicle.model}" />
+                <td th:text="${vehicle.categoryName}" />
+                <td th:text="${vehicle.registrationNumber}" />
+                <td th:text="${vehicle.typeName}" />
+                <td th:text="${vehicle.getYear()}" />
+                <td th:text="${vehicle.isTrailerAvailable}" />
+                <td>
+                    <form th:method="GET" th:action="@{/update}">
+                        <input type="hidden" id="${vehicle.id}" name="id" th:value="${vehicle.getId()}">
+                        <input type="submit" value="Редактировать">
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <form th:method="GET" th:action="@{/search}">
+        <label for="make">Введите марку ТС:</label><br>
+        <input type="text" id="make" name="make" value=""><br>
+        <label for="model">Введите модель ТС:</label><br>
+        <input type="text" id="model" name="model"><br>
+        <label for="categoryName">Введите категорию ТС:</label><br>
+        <input type="text" id="categoryName" name="categoryName"><br>
+        <label for="registrationNumber">Введите гос. номер ТС:</label><br>
+        <input type="text" id="registrationNumber" name="registrationNumber"><br>
+        <label for="manufactureYear">Выберите год выпуска транспортного средства:</label>
+        <input type="number" min="1885" max="2023" step="1" value="" id="manufactureYear" name="manufactureYear"/><br>
+        <input type="submit" value="Поиск"/>
+    </form>
+    <form th:method="GET" th:action="@{/}">
+        <input type="submit" value="Сбросить поиск">
+    </form>
+</body>
+</html>
